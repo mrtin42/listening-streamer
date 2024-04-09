@@ -3,17 +3,20 @@
 nodejs websocket which occasionally pings last.fm for the currently playing track of a user and broadcasts it to all connected clients
 
 ## usage
+
 - you must have a last.fm api key, a last.fm account to track (so connect it to your streaming service) and a last.fm username
 - `npm install` to install dependencies
 - `npm start` to start the server
 
 ## config
+
 - create a `.env` file in the root directory (ignored by git) with the following keys
     - `LASTFM_API_KEY` - your last.fm api key
     - `LASTFM_USERNAME` - the last.fm username you want to track
     - `PORT` - the port the server should run on (defaults to 1743)
 
 ## client
+
 - connect to the server via websocket (recommended to use [socket.io](https://socket.io/) for client)
 - listen for the following events
     - `data` - literally every message the server sends
@@ -33,6 +36,7 @@ data = {
 }
 ```
 ## benefits
+
 - you can use this to display the currently playing track on a website, in a discord bot, etc.
 - you can use this to trigger events based on the currently playing track
 - this server has its own persistent connection to last.fm, so you don't have to worry about rate limiting or anything like that
