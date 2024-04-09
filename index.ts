@@ -14,6 +14,7 @@ const dotenv = require('dotenv').config();
 
 const API_KEY = process.env.LASTFM_API_KEY;
 const username = process.env.LASTFM_USERNAME;
+const port = Number(process.env.PORT) || 1743;
 
 let currentTrack: NowListeningObject;
 
