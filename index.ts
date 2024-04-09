@@ -1,17 +1,17 @@
 // basically, stream ur now playing from last.fm to a websocket client
 
 
-import { createServer as ss } from 'https';
 import express from 'express';
 import WebSocket from 'ws';
 import axios from 'axios';
 import { NowListeningObject } from './types';
 const dotenv = require('dotenv').config();
+const server = require(process.env.SECURE === 'false' ? 'http' : 'https').createServer;
 
-const certs = {
+const certs = process.env.SECURE === 'false' ? {
   key: require('fs').readFileSync(process.env.SSL_KEY_PATH),
   cert: require('fs').readFileSync(process.env.SSL_CERT_PATH),
-};
+} : undefined;
 
 const API_KEY = process.env.LASTFM_API_KEY;
 const username = process.env.LASTFM_USERNAME;
@@ -47,21 +47,25 @@ const fetchRecentTracks = async () => {
   }
 };
 
-fetchRecentTracks();
-
-setInterval(fetchRecentTracks, 2500);
-
-// configuring servers
-// - http - bounce to https
-const secureServer = ss(certs, express().get('/', (req: any, res: any) => {
+const httpHandler = express().get('/', (req: any, res: any) => {
   res.status(426).send(
     `hi please use a secure websocket connection to use this service\
     <br><br>\
     if you're still curious, im currently listening to: ${currentTrack.listening ? `${currentTrack.track.name} by ${currentTrack.track.artist}` : 'nothing'}\
     <br><br>\
     source code: https://github.com/mrtin42/listening-streamer`
-  );
-})).listen(1743); console.log('Secure server listening on port 1743');
+)});
+
+fetchRecentTracks();
+
+setInterval(fetchRecentTracks, 2500);
+
+// configuring servers
+// - http - bounce to https
+const secureServer = server(
+  certs ? certs : httpHandler,
+  certs ? httpHandler : undefined
+).listen(1743); console.log('Secure server listening on port 1743');
 const wss = new WebSocket.Server({ server: secureServer, perMessageDeflate: false }); console.log('Websocket server binding to secure server');
 wss.on('connection', (ws:any) => {
   console.log('Client connected: streaming now playing data');
