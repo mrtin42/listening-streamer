@@ -8,7 +8,7 @@ import { NowListeningObject } from './types';
 const dotenv = require('dotenv').config();
 const server = require(process.env.SECURE === 'false' ? 'http' : 'https').createServer;
 
-const certs = process.env.SECURE === 'false' ? {
+const certs = process.env.SECURE === 'true' ? {
   key: require('fs').readFileSync(process.env.SSL_KEY_PATH),
   cert: require('fs').readFileSync(process.env.SSL_CERT_PATH),
 } : undefined;
