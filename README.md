@@ -51,7 +51,7 @@ data = {
 
 ## license
 
-ionknow man do whatever you want with this code just attribute me or something
+~~ionknow man do whatever you want with this code just attribute me or something~~ i lied: [GNU](/LICENSE.md)
 
 ---
 
