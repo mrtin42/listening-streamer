@@ -95,7 +95,7 @@ wss.on('connection', (ws:any) => {
   });
   ws.on('message', (message: string) => {
     console.log(`Client message: ${message}`);
-    if (message === 'ba dum ba dum badum heartbeat') {
+    if (message.includes('heartbeat')) {
       console.log('Client heartbeat received');
       ws.send('yes yes i am alive, keep displaying the data.');
     }
