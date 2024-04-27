@@ -23,8 +23,8 @@ const fetchRecentTracks = async () => {
   try {
     const response = await axios.get(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${API_KEY}&format=json`);
     const track = response.data.recenttracks.track[0];
-    if (track['@attr'] && track['@attr'].nowplaying) console.log(`Fetched track: ${track.name} by ${track.artist['#text']} from Last.fm`);
-    if (track['@attr'] && track['@attr'].nowplaying) {
+    if ((track['@attr'] && track['@attr'].nowplaying) && (currentTrack.listening && (currentTrack.track.name !== track.name && currentTrack.track.artist !== track.artist['#text']))) {
+      console.log(`Fetched track: ${track.name} by ${track.artist['#text']} from Last.fm`);
       currentTrack = {
         listening: true,
             track: {
