@@ -17,7 +17,9 @@ const API_KEY = process.env.LASTFM_API_KEY;
 const username = process.env.LASTFM_USERNAME;
 const port = Number(process.env.PORT) || 1743;
 
-let currentTrack: NowListeningObject;
+let currentTrack: NowListeningObject = {
+  listening: false
+};
 
 const fetchRecentTracks = async () => {
   try {
