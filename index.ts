@@ -58,7 +58,7 @@ const httpHandler = express().get('/', (req: any, res: any) => {
 
 fetchRecentTracks();
 
-setInterval(fetchRecentTracks, 2500);
+setInterval(fetchRecentTracks, 750);
 
 // configuring servers
 // - http - bounce to https
@@ -87,8 +87,14 @@ wss.on('connection', (ws:any) => {
       // sending nothing: reduces bandwidth and client parsing
       console.log('No change in track: sending nothing to client');
     }
-  }, 2500);
+  }, 750);
   ws.on('close', () => {
     clearInterval(interval);
+  });
+  ws.on('message', (message: string) => {
+    if (message === 'ba dum ba dum heartbeat') {
+      console.log('Client heartbeat received');
+      ws.send('yes yes i am alive, keep displaying the data.');
+    }
   });
 });
