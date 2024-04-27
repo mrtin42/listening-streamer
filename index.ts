@@ -94,7 +94,7 @@ wss.on('connection', (ws:any) => {
     clearInterval(interval);
   });
   ws.on('message', (message: string) => {
-    if (message === 'ba dum ba dum heartbeat') {
+    if (message === 'ba dum ba dum badum heartbeat') {
       console.log('Client heartbeat received');
       ws.send('yes yes i am alive, keep displaying the data.');
     }
