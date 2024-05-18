@@ -10,9 +10,9 @@ export type NowListeningObject = {
             medium: string;
             large: string;
         };
-    };
-    urls: {
-        lastfm: string;
-        spotify?: string;
+        urls: {
+            lastfm: string;
+            spotify?: string;
+        };
     };
 };
