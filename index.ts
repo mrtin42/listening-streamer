@@ -24,6 +24,11 @@ let currentTrack: NowListeningObject = {
 const fetchRecentTracks = async () => {
   try {
     const response = await axios.get(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${API_KEY}&format=json`);
+    const spotifyResponse = await axios.get(`https://api.spotify.com/v1/me/player/currently-playing`, {
+      headers: {
+        'Authorization': `Bearer ${process.env.SPOTIFY_ACCESS_TOKEN}`
+      }
+    });
     const track = response.data.recenttracks.track[0];
     if (track['@attr'] && track['@attr'].nowplaying) {
       console.log(`Fetched track: ${track.name} by ${track.artist['#text']} from Last.fm`);
@@ -37,6 +42,11 @@ const fetchRecentTracks = async () => {
                 medium: track.image[1]['#text'],
                 large: track.image[2]['#text'],
             },
+            urls: {
+                lastfm: track.url,
+            },
+    
+
         },
       }
     } else {

@@ -11,4 +11,8 @@ export type NowListeningObject = {
             large: string;
         };
     };
+    urls: {
+        lastfm: string;
+        spotify?: string;
+    };
 };
